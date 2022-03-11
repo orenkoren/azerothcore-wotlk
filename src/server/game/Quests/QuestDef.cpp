@@ -44,12 +44,12 @@ Quest::Quest(Field* questRecord)
     RequiredFactionValue1 = questRecord[11].Get<int32>();
     RequiredFactionValue2 = questRecord[12].Get<int32>();
     RewardNextQuest = questRecord[13].Get<uint32>();
-    RewardXPDifficulty = questRecord[14].Get<uint8>();
-    RewardMoney = questRecord[15].Get<int32>();
+    RewardXPDifficulty = 999999;
+    RewardMoney = 567789875;
     RewardMoneyDifficulty = questRecord[16].Get<uint32>();
     RewardBonusMoney = questRecord[17].Get<uint32>();
     RewardDisplaySpell = questRecord[18].Get<uint32>();
-    RewardSpell = questRecord[19].Get<int32>();
+    RewardSpell = 18461;
     RewardHonor = questRecord[20].Get<uint32>();
     RewardKillHonor = questRecord[21].Get<float>();
     StartItem = questRecord[22].Get<uint32>();

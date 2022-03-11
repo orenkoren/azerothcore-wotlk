@@ -291,6 +291,22 @@ services:
       - ${DOCKER_VOL_TOOLS_MMAPS:-./var/extractors/mmaps}:/azerothcore/env/client/mmaps
     profiles: [prod, tools]
 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    hostname: phpmyadmin.local
+    ports :
+      - "9091:80"
+    environment:
+      - PMA_HOST=ac-database:3306
+      # - PMA_ARBITRARY=1
+      - UPLOAD_LIMIT=300M
+      - MAX_EXECUTION_TIME=6000
+    networks:
+      # - azerothcore-wotlk_ac-network
+      - ac-network
+    profiles: [app]
+
 volumes:
   ac-database:
   ac-bin:

@@ -3766,7 +3766,7 @@ void Spell::_cast(bool skipCheck)
         modOwner->SetSpellModTakingSpell(this, true);
 
     // Okay, everything is prepared. Now we need to distinguish between immediate and evented delayed spells
-    if ((m_spellInfo->Speed > 0.0f && !m_spellInfo->IsChanneled())/* xinef: we dont need this || m_spellInfo->Id == 14157*/)
+    if ((false)/* xinef: we dont need this || m_spellInfo->Id == 14157*/)
     {
         // Remove used for cast item if need (it can be already nullptr after TakeReagents call
         // in case delayed spell remove item at cast delay start
@@ -3860,7 +3860,7 @@ void Spell::_cast(bool skipCheck)
                 m_caster->CombatStartOnCast(target, !m_spellInfo->HasAttribute(SPELL_ATTR3_SUPRESS_TARGET_PROCS), GetDelayMoment() + 500); // xinef: increase this time so we dont leave and enter combat in a moment
 
     if (m_caster->GetTypeId() == TYPEID_PLAYER)
-        if (m_caster->ToPlayer()->GetCommandStatus(CHEAT_COOLDOWN))
+        // if (m_caster->ToPlayer()->GetCommandStatus(CHEAT_COOLDOWN))
             m_caster->ToPlayer()->RemoveSpellCooldown(m_spellInfo->Id, true);
 
     SetExecutedCurrently(false);
@@ -7413,7 +7413,7 @@ void Spell::Delayed() // only called in DealDamage()
     //    return;
 
     //check pushback reduce
-    int32 delaytime = 500;                                  // spellcasting delay is normally 500ms
+    int32 delaytime = 0;                                  // spellcasting delay is normally 500ms
     int32 delayReduce = 100;                                // must be initialized to 100 for percent modifiers
     m_caster->ToPlayer()->ApplySpellMod(m_spellInfo->Id, SPELLMOD_NOT_LOSE_CASTING_TIME, delayReduce, this);
     delayReduce += m_caster->GetTotalAuraModifier(SPELL_AURA_REDUCE_PUSHBACK) - 100;
@@ -7422,13 +7422,13 @@ void Spell::Delayed() // only called in DealDamage()
 
     AddPct(delaytime, -delayReduce);
 
-    if (m_timer + delaytime > m_casttime)
-    {
-        delaytime = m_casttime - m_timer;
-        m_timer = m_casttime;
-    }
-    else
-        m_timer += delaytime;
+    // if (m_timer + delaytime > m_casttime)
+    // {
+    //     delaytime = m_casttime - m_timer;
+    //     m_timer = m_casttime;
+    // }
+    // else
+    //     m_timer += delaytime;
 
     LOG_DEBUG("spells", "Spell {} partially interrupted for ({}) ms at damage", m_spellInfo->Id, delaytime);
 
