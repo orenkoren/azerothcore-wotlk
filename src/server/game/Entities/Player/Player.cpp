@@ -1866,11 +1866,21 @@ void Player::Regenerate(Powers power)
             break;
         case POWER_RAGE:                                    // Regenerate rage
             {
-                if (!IsInCombat() && !HasAuraType(SPELL_AURA_INTERRUPT_REGEN))
+                // if (!IsInCombat() && !HasAuraType(SPELL_AURA_INTERRUPT_REGEN))
+                // {
+                //     float RageDecreaseRate = sWorld->getRate(RATE_POWER_RAGE_LOSS);
+                //     addvalue += -20 * RageDecreaseRate;               // 2 rage by tick (= 2 seconds => 1 rage/sec)
+                // }
+                
+                // m-wittner: this is a copy of powercheat function to recharge rage back to max every iteration 
+                // Set the value to 0 first then set it to max to force resend of packet as for range clients keeps removing rage
+                if (power == POWER_RAGE || power == POWER_RUNIC_POWER)
                 {
-                    float RageDecreaseRate = sWorld->getRate(RATE_POWER_RAGE_LOSS);
-                    addvalue += -20 * RageDecreaseRate;               // 2 rage by tick (= 2 seconds => 1 rage/sec)
+                    UpdateUInt32Value(static_cast<uint16>(UNIT_FIELD_POWER1) + power, 0);
                 }
+
+                SetPower(power, maxValue);
+                return;
             }
             break;
         case POWER_ENERGY:                                  // Regenerate energy (rogue)
