@@ -18,4 +18,4 @@
 
 -- UPDATE `creature` SET `curhealth` =
 -- UPDATE `creature` SET `id1` = 17076 where `map` = 571
-UPDATE `creature_template` SET `healthmodifier` = `healthmodifier` * 40;
+UPDATE `creature_template` SET `healthmodifier` = `healthmodifier` * 15;
